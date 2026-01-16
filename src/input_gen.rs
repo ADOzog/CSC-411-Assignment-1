@@ -1,7 +1,6 @@
 use rand::rngs::SmallRng;
-use rand::{Rng, SeedableRng, distr::StandardUniform};
+use rand::{Rng, SeedableRng};
 use std::f64;
-use std::vec;
 
 pub fn gen_uni_rand(n: usize, seed: u64) -> Vec<i64> {
     let rng = SmallRng::seed_from_u64(seed as u64);

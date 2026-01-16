@@ -1,4 +1,4 @@
-pub fn std_rec_merge_sort(mut input_vec: Vec<i64>) -> Vec<i64> {
+pub fn std_rec_merge_sort(input_vec: Vec<i64>) -> Vec<i64> {
     let len_vec = input_vec.len();
     if len_vec <= 1 {
         input_vec
