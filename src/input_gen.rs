@@ -3,23 +3,23 @@ use rand::{Rng, SeedableRng, distr::StandardUniform};
 use std::f64;
 use std::vec;
 
-fn gen_uni_rand(n: usize, seed: u64) -> Vec<i64> {
+pub fn gen_uni_rand(n: usize, seed: u64) -> Vec<i64> {
     let rng = SmallRng::seed_from_u64(seed as u64);
     rng.random_iter().take(n).collect()
 }
 
-fn gen_sorted(n: usize, seed: u64) -> Vec<i64> {
+pub fn gen_sorted(n: usize, seed: u64) -> Vec<i64> {
     let mut res = gen_uni_rand(n, seed);
     res.sort();
     res // This is increasing
 }
-fn gen_rev_sorted(n: usize, seed: u64) -> Vec<i64> {
+pub fn gen_rev_sorted(n: usize, seed: u64) -> Vec<i64> {
     let mut res = gen_uni_rand(n, seed);
     res.sort();
     res.reverse();
     res // This is decreasing 
 }
-fn gen_almost_sorted(n: usize, seed: u64) -> Vec<i64> {
+pub fn gen_almost_sorted(n: usize, seed: u64) -> Vec<i64> {
     let mut res = gen_sorted(n, seed);
     let mut rng = SmallRng::seed_from_u64(seed as u64);
     let num_swaps = f64::round(n as f64 / 4.0) as usize;
@@ -30,7 +30,7 @@ fn gen_almost_sorted(n: usize, seed: u64) -> Vec<i64> {
     }
     res
 }
-fn gen_organ_pipe(n: usize, seed: u64) -> Vec<i64> {
+pub fn gen_organ_pipe(n: usize, seed: u64) -> Vec<i64> {
     let inc_bottem_half = f64::ceil(n as f64 / 2.0) as usize;
     let mut maybe_larger_half = gen_sorted(inc_bottem_half, seed);
     let mut maybe_smaller_half = gen_sorted(inc_bottem_half - 1, seed);
