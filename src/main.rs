@@ -67,8 +67,8 @@ fn main() {
         }
     }
 
-    write_vec_to_json(all_trial_results);
-    println!("All done!");
+    //write_vec_to_json(all_trial_results);
+    //println!("All done!");
 
     // For the degraded spacial locality
 
