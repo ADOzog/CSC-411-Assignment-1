@@ -2,11 +2,15 @@ use rand::rngs::SmallRng;
 use rand::{Rng, SeedableRng};
 use std::f64;
 
+#[derive(Debug, PartialEq, Clone, Copy)]
+pub struct Ising {
+    pub data: i64,
+}
+
 pub fn gen_uni_rand(n: usize, seed: u64) -> Vec<i64> {
     let rng = SmallRng::seed_from_u64(seed as u64);
     rng.random_iter().take(n).collect()
 }
-
 pub fn gen_sorted(n: usize, seed: u64) -> Vec<i64> {
     let mut res = gen_uni_rand(n, seed);
     res.sort();
@@ -40,6 +44,10 @@ pub fn gen_organ_pipe(n: usize, seed: u64) -> Vec<i64> {
         maybe_smaller_half.append(&mut maybe_larger_half.drain(..).rev().collect());
         maybe_smaller_half
     }
+}
+
+pub fn vec_to_vec_of_singletons(input_vec: Vec<i64>) -> Vec<Ising> {
+    input_vec.into_iter().map(|x| Ising { data: x }).collect()
 }
 
 #[cfg(test)]
@@ -114,5 +122,16 @@ mod tests {
             assert!(res[..inc_bottem_half].iter().max() > res[inc_bottem_half..].iter().max());
             // The last case makes sure it is strictly increasing until half
         }
+    }
+
+    #[test]
+    fn test_vec_to_vec_of_singletons() {
+        let n = 5;
+        let seed = 42;
+        let given_data = gen_uni_rand(n, seed);
+        let create_fn: fn(Vec<i64>) -> Vec<Ising> = vec_to_vec_of_singletons; // type check
+        let res: Vec<Ising> = create_fn(given_data); // type check outputs
+        assert_eq!(res.len(), n);
+        assert_eq!(res[0].data, gen_uni_rand(n, seed)[0]); // check data is the same
     }
 }
