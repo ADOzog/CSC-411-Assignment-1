@@ -67,7 +67,7 @@ fn main() {
         }
     }
 
-    write_vec_to_json(all_trial_results);
+    write_vec_to_json_opt(all_trial_results);
     println!("All done!");
 
     // For the degraded spacial locality
@@ -89,13 +89,19 @@ fn main() {
         }
     }
 
-    //write_vec_to_json(all_trial_results_deg_space);
-    //println!("All done with EX part")
+    write_vec_to_json_deg(all_trial_results_deg_space);
+    println!("All done with EX part")
 }
 
-fn write_vec_to_json(data_vec: Vec<TrialResult>) {
+fn write_vec_to_json_opt(data_vec: Vec<TrialResult>) {
     let json_data = serde_json::to_string(&data_vec).unwrap();
     let mut file = File::create("optimized_results.json").unwrap();
+    let res = file.write_all(json_data.as_bytes());
+    res.unwrap()
+}
+fn write_vec_to_json_deg(data_vec: Vec<TrialResult>) {
+    let json_data = serde_json::to_string(&data_vec).unwrap();
+    let mut file = File::create("deg_space_results.json").unwrap();
     let res = file.write_all(json_data.as_bytes());
     res.unwrap()
 }

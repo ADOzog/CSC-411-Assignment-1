@@ -13,7 +13,10 @@ pub fn bubble_sort(mut input_vec: Vec<i64>) -> Vec<i64> {
              * it tells me this makes my code less readable
              * but I know that it improves my performance
              * (Anthony vs. LLMs) 1 - 0 */
-            match (input_vec[i] > input_vec[i + 1], did_swap) {
+            match (
+                unsafe { input_vec.get_unchecked(i) > input_vec.get_unchecked(i + 1) },
+                did_swap,
+            ) {
                 (true, false) => {
                     did_swap = true;
                     input_vec.swap(i, i + 1);

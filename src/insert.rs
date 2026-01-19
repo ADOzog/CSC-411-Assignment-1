@@ -5,7 +5,9 @@ pub fn insertion_sort(mut input_vec: Vec<i64>) -> Vec<i64> {
     let len_vec = input_vec.len();
     while max_pos_checked < len_vec {
         let mut cur_pos = max_pos_checked;
-        while cur_pos > 0 && input_vec[cur_pos - 1] > input_vec[cur_pos] {
+        while cur_pos > 0
+            && unsafe { input_vec.get_unchecked(cur_pos - 1) > input_vec.get_unchecked(cur_pos) }
+        {
             input_vec.swap(cur_pos, cur_pos - 1);
             cur_pos -= 1;
         }

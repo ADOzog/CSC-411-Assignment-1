@@ -279,7 +279,7 @@ plot(xs,
   col = "blue",
   xlab = "Length of Input",
   ylab = "Time (In nano seconds)",
-  main = "Pipe Oragan",
+  main = "Pipe Organ",
   pch = 4,
 )
 
