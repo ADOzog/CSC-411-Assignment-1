@@ -6,8 +6,16 @@ pub fn std_rec_merge_sort(input_vec: Vec<i64>) -> Vec<i64> {
         input_vec
     } else {
         let half_way = f64::ceil(len_vec as f64 / 2.0) as usize;
-        // The unsafe block ignores the bounds check
+        /* The unsafe block ignores the bounds check
+         * this is a smart optimization since
+         * that would be unneeded overhead
+         * and I already do a sort of "bounds check"
+         * with the if */
         let (left, right) = unsafe { input_vec.split_at_unchecked(half_way) };
+        /* If I want to implement the Cache Optimizations
+         * I need to change these from
+         * Clones of vectors (Vec<i64>) to
+         * mutable refs of slices (&mut [i64]) */
         let s_left = std_rec_merge_sort(left.to_vec());
         let s_right = std_rec_merge_sort(right.to_vec());
         merge(s_left, s_right)
@@ -110,6 +118,5 @@ mod test {
         let res = std_rec_merge_sort_sings(vec_to_vec_of_singletons(rvec.clone()));
         rvec.sort();
         assert_eq!(res, vec_to_vec_of_singletons(rvec));
-        // How should I test for early exit
     }
 }

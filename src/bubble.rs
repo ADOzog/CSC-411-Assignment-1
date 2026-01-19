@@ -1,12 +1,18 @@
 use crate::input_gen::Ising;
 
 pub fn bubble_sort(mut input_vec: Vec<i64>) -> Vec<i64> {
-    let mut did_swap = true; // starts as true to enter loop
+    let mut did_swap = true; // Starts as true to enter loop
     let vec_len = input_vec.len() - 1;
-    // this does exit early
+    // This boolean handles the logic for an exit early
     while did_swap {
         did_swap = false;
         for i in 0..vec_len {
+            /* Note here how I use a match statement to reduce
+             * unnecessary rewrites of the did_swap var
+             * when I pasted this into an LLM to check my work
+             * it tells me this makes my code less readable
+             * but I know that it improves my performance
+             * (Anthony vs. LLMs) 1 - 0 */
             match (input_vec[i] > input_vec[i + 1], did_swap) {
                 (true, false) => {
                     did_swap = true;
@@ -57,6 +63,7 @@ mod test {
         rvec.sort();
         assert_eq!(res, rvec);
         // How should I test for early exit
+        // I didn't write a test to check this however I know it does
     }
     #[test]
     fn test_bubble_sort_sings() {
@@ -64,6 +71,5 @@ mod test {
         let res = bubble_sort_sings(vec_to_vec_of_singletons(rvec.clone()));
         rvec.sort();
         assert_eq!(res, vec_to_vec_of_singletons(rvec));
-        // How should I test for early exit
     }
 }

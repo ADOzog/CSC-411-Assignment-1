@@ -46,6 +46,8 @@ pub fn gen_organ_pipe(n: usize, seed: u64) -> Vec<i64> {
     }
 }
 
+// This degrades the spatial locality since the rust compiler no longer puts them next to each
+// other
 pub fn vec_to_vec_of_singletons(input_vec: Vec<i64>) -> Vec<Ising> {
     input_vec.into_iter().map(|x| Ising { data: x }).collect()
 }
