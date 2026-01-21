@@ -10,9 +10,7 @@
 \usepackage{latexsym}
 %\usepackage{hyperref}
 \usepackage[colorlinks=true, pdfstartview=FitV, linkcolor=blue,
-            citecolor=blue, urlcolor=blue]{hyperref}
-\usepackage[pdftex]{graphicx}
-\usepackage{epstopdf}
+            citecolor=blue, urlcolor=blue]{hyperref} \usepackage[pdftex]{graphicx} \usepackage{epstopdf}
 
 % Any custom macros or packages can go here
 \newtheorem{remark}{Remark}
@@ -22,9 +20,7 @@
 \date{\today}
 \markboth{title}{A. Ozog}
 
-\begin{document}
-
-\maketitle
+\begin{document} \maketitle
 % I do not feel I needed an abstract
 % \begin{abstract}
   % This is the abstract
@@ -59,8 +55,63 @@ I call the function of generate a sorted vector of \texttt{i64} then make $\frac
 I call the function to generate $2$ sorted vectors of \texttt{i64} of length $\frac{n}{2}$ then I append which ever vector has the smaller maximum element to the other. I do this to ensure I am not increasing past the halfway mark.
 
 \section{Timing}
+The only thing to note about the code I used form the timing is that I used \href{https://doc.rust-lang.org/std/time/struct.Instant.html}{this} to handle the timing. I also used \texttt{clone} more than a optimized program should have but the \texttt{clone} does not affect the timing
 
 \section{Analysis}
+To note, this was both my first time implementing these sorting algorithms and my first time comparing them. None of the results surprised me aside from the tests on the sorted data.
+\subsection{Running the code}
+To note, 
+\begin{enumerate}
+  \item make sure you are in the correct directory
+  \item make sure you have cargo installed
+  \item the instructions to install it can be found here \href{https://doc.rust-lang.org/cargo/getting-started/installation.html}{here}
+  \item make sure you have R installed as well
+  \item the instructions to install it can be found \href{https://rstudio-education.github.io/hopr/starting.html}{here}
+  \item make sure you have the R jsonlite library installed too
+  \item run the following commands in bash if you do note have the library
+    \begin{itemize}
+      \item sudo R
+      \item install.packages("jsonlite")
+    \end{itemize}
+    
+\end{enumerate}
+
+\begin{verbatim}
+cargo test
+cargo build -r
+./target/release/CSC-411-Assignment-1
+# or however you would run a binary on the operating system of your choice
+# next I make a fresh dir and run the 2 R scripts on the new data
+mkdir test
+mv optimized_results.json test/
+mv deg_space_results.json test/
+cp /graphs/graph_building.r test/
+cp /graphs/deg_graph_building.r test/
+cd test
+Rscript graph_building.r
+Rscript deg_graph_building.r
+\end{verbatim}
+
+\subsection{Bubble and Insertion Sort Comparison}
+% Bubble is slower but they have the same complexity
+For random inputs Bubble Sort is much slower than Insertion Sort. I know that they have the same complexity but Bubble Sort preforms more swaps and comparisons so even though the theoretical complexity is the same among the two sorting algorithms Insertion sort is much faster. To this point at $n=10,000$ Bubble Sort took $63,839,181$ Nanoseconds while Insertion Sort took $8,963,227$ Nanoseconds, $\times 8$ faster.
+\subsection{Benefits of nearly sorted inputs}
+% Insertion sort benefits the most
+The percent faster for each algorithm at $n=10,000$ as compared to the Uniform Random data is as follows
+\begin{description}
+  \item[Bubble Sort] $\% 31.94$
+  \item[Insertion Sort] $\%  49.79$
+  \item[Merge Sort] $\% 12.43$
+\end{description}
+So as the data describes, Insertion Sort benefits the most followed by Bubble Sort. This makes since both of these algorithms take an iterative approach where as merge does not get to benefit from the nicer data since it still has to break it down and piece it back together. Insertion Sort benefits the most since it is building the section of sorted data and that becomes very easy since the data is input in a nice way.
+
+\subsection{Input size and Merge Sort}
+% Go look at the graphs 
+I would say around $n = 4,000$ Merge Sort becomes the clear winner.
+\subsection{Early-exit Bubble Sort}
+% Does super well on the Sorted and much better on the nearly sorted data
+\subsection{Theory vs. Experiment}
+% Load times and added operations from some of the abstractions
 
 \section{Degraded Spatial Locality}
 
