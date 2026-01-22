@@ -110,10 +110,13 @@ So as the data describes, Insertion Sort benefits the most followed by Bubble So
 I would say around $n = 4,000$ Merge Sort becomes the clear winner.
 \subsection{Early-exit Bubble Sort}
 % Does super well on the Sorted and much better on the nearly sorted data
+With the implementation of early exit optimization Bubble sort preforms at a $\% 31$ increase in efficiency on nearly sorted data, as mentioned previously. I also only takes $6134$ nanoseconds on average to finish executing on the sorted data where $n=10,000$. This early exit makes it much faster than even merge sort is on the sorted data.
 \subsection{Theory vs. Experiment}
 % Load times and added operations from some of the abstractions
+The biggest difference I noticed in between the theory and the experiment came from how operations are actually done on the machine. One expression of this can be seen in the previously section discussing how Bubble Sort and Insertion Sort have the same computational complexity but their actual execution was very different. A second example is the problem that was plaguing me during my implementation, the bounds checking. I was comparing my execution times with Joe Sypal, who wrote his solutions in \texttt{C}. Rust, even though it is built on the same back end (LLVM), was coming in a bit slower because of the bounds checks I failed to remove. Also, comparing these solutions across languages shows best this idea of how different the operations are actually being preformed. All these algorithms are the same, with the same time and space complexity but when running the experiment the outcome can go very differently because of what is actually happening on the machine.
 
 \section{Degraded Spatial Locality}
+For this part of the assignment I took all of my clean and simple \texttt{fn(Vec<i64>) -> Vec<i64>} functions and gave them an "evil" twin implementation. I made functions of the following type: \texttt{fn(Vec<Ising>) -> Vec<Ising>}. All I did was create a wrapper struct around the \texttt{i64} and put those into vectors. In doing this I took away rust ability to keep the data highly localized by both making the data larger and preventing the data from beings stored sequentially. This, for the most part, made the execution times worse across the board. In particular, Insertion Sort and Bubble Sort where affected much more than Merge Sort because of the number of comparisons and swaps they preform.  The most affected of those two was Bubble Sort, because as mentioned in a previous section, it preforms even more swaps and comparisons than Insertion Sort does.
 
 
 \end{document}
